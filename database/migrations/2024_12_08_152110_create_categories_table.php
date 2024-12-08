@@ -16,6 +16,20 @@ return new class extends Migration
             $table->string('name')->unique(); //check for existing name
             $table->timestamps();
         });
+
+        Schema::create('items', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('category_id');
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->decimal('price', 8, 2);
+            $table->integer('quantity');
+            $table->string('sku')->unique();
+            $table->string('picture')->nullable();
+            $table->timestamps();
+    
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+        });
     }
 
     /**

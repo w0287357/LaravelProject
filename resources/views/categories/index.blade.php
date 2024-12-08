@@ -1,33 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container">
     <h1>Categories</h1>
-
-    <!-- Link to create a new category -->
-    <a href="{{ route('categories.create') }}">Create a New Category</a>
-
-    <!-- Display categories in a table -->
-    @if($categories->isEmpty())
-        <p>No categories available.</p>
-    @else
-        <table border="1">
-            <thead>
+    <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Add New Category</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($categories as $category)
                 <tr>
-                    <th>Category Name</th>
-                    <th>Actions</th>
+                    <td>{{ $category->name }}</td>
+                    <td>
+                        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning">Edit</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach($categories as $category)
-                    <tr>
-                        <td>{{ $category->name }}</td>
-                        <td>
-                            <!-- Edit button -->
-                            <a href="{{ route('categories.edit', $category->id) }}">Edit</a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @endif
+            @empty
+                <tr>
+                    <td colspan="2">No categories found.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
 @endsection
