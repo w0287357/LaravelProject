@@ -40,16 +40,33 @@ class CategoryController extends Controller
         return view('categories.index', compact('categories'));
     }
 
-    // Destroy the specified category
-    public function destroy($id)
+    // Show the form to edit the category
+    public function edit($id)
     {
-        // Find the category by ID
+        // Fetch the category by id
         $category = Category::findOrFail($id);
 
-        // Delete the category
-        $category->delete();
+        // Pass the category to the edit view
+        return view('categories.edit', compact('category'));
+    }
 
-        // Redirect with success message
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully!');
+    // Update the category in the database
+    public function update(Request $request, $id)
+    {
+        // Validate the form input
+        $request->validate([
+            'name' => 'required|unique:categories,name,' . $id . '|max:255',
+        ]);
+
+        // Fetch the category by id
+        $category = Category::findOrFail($id);
+
+        // Update the category with new data
+        $category->update([
+            'name' => $request->name,
+        ]);
+
+        // Redirect to the categories index page
+        return redirect()->route('categories.index');
     }
 }
