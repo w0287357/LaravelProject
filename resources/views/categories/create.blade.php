@@ -1,24 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Category</title>
-</head>
-<body>
-    <h1>Create a New Category</h1>
+@extends('layouts.app')
 
+@section('content')
+<div class="container">
+    <h1>Create a New Category</h1>
     <form action="{{ route('categories.store') }}" method="POST">
         @csrf
-        <label for="name">Category Name: </label>
-        <input type="text" id="name" name="name" placeholder="Enter Category Name" value="{{ old('name') }}">
-        
-        @error('name')
-            <div class="error">{{ $message }}</div>
-        @enderror
-        
-        <button type="submit">Add Category</button>
+        <div class="mb-3">
+            <label for="name" class="form-label">Category Name</label>
+            <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}" placeholder="Enter category name">
+            @error('name')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <button type="submit" class="btn btn-success">Save Category</button>
     </form>
-
-</body>
-</html>
+</div>
+@endsection
