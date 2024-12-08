@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\Category;
 
 class ItemController extends Controller
 {
     public function create()
     {
-        return view('items.create');
+        $categories = Category::all(); // Fetch all categories
+        return view('items.create', compact('categories'));
     }
 
     public function store(Request $request)
